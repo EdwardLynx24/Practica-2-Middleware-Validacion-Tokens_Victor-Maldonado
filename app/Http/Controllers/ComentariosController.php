@@ -70,11 +70,17 @@ class ComentariosController extends Controller
         ],200);
     }
     /* Comentarios Personas */
-    public function comentariosPersonas(int $persona, int $comentario = null){
-
+    public function mostrarComentariosPersonas(int $persona, int $comentarios=0){
         return response()->json([
-            "publicacion"=>($comentario == null)?\App\Comentarios::where('persona_id', $persona)
-            ->get():\App\Comentarios::where('persona_id', $persona)->where('id',$comentario)->get()
+            "comentarios y de una persona"=>($comentarios == 0)?\App\Comentarios::all():
+            \App\Comentarios::where('persona_id', $persona)->where('id',$comentarios)->get()
+        ],200);
+    }
+    public function mostrarComentarioPublicacionPersona(int $persona, int $publicacion, int $comentario = 0){
+        return response()->json([
+        "todosalv"=>($comentario == 0)?\App\Comentarios::where('publicacion_id',$publicacion)->where(
+        'persona_id',$persona)->get():\App\Comentarios::where('id',$comentario)->where('publicacion_id',$publicacion)->where(
+        'persona_id',$persona)->get()
         ],200);
     }
 }

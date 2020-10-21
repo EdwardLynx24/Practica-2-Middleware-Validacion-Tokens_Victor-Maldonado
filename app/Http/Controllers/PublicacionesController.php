@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Publicaciones;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class PublicacionesController extends Controller
 {
@@ -71,10 +73,18 @@ class PublicacionesController extends Controller
     }
     /* Publicaciones de una persona */
     public function publicacionPersona(int $persona, int $publicacion = null){
-
         return response()->json([
-            "publicacion"=>($publicacion == null)?\App\Publicaciones::where('persona_id', $persona)
-            ->get():\App\Publicaciones::where('persona_id', $persona)->where('id',$publicacion)->get()
+            "publicacion"=>($publicacion == null)?
+            \App\Publicaciones::where('persona_id',$persona)->get()://Publicaciones de una persona
+            \App\Publicaciones::where('persona_id',$persona)->where('id',$publicacion)->get()//Publicacion de una persona
         ],200);
+    }
+    public function mostrarBasedeDatos(){
+        return response()->json([
+            'Base de Datos'=>DB::table('comentarios')
+            ->join('Personas','personas.id','=','comentarios.persona_id')
+            ->join('publicaciones','publicaciones.id','=','comentarios.publicacion_id')
+            ->select('personas.*','publicaciones.*','comentarios.*')->get()
+        ]);
     }
 }

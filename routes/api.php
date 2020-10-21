@@ -3,18 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 /*Gestion a Personas */
-    Route::Post("/show/Personas/{id?}",'PersonasController@Show')->where("id","[0-9]+");//Mostrar personas
+    Route::Get("/show/Personas/{id?}",'PersonasController@Show')->where("id","[0-9]+");//Mostrar personas
 //Insertar personas
     Route::Post("/insert/Personas/{nombre}/{apellidoPaterno}/{apellidoMaterno}/{edad}/{sexo}"
     ,'PersonasController@create')->where(
@@ -64,7 +54,7 @@ use Illuminate\Support\Facades\Route;
 /*-----------------------------------------------------------------------------------------------------------*/
 /* Publicaciones */
     /* Mostrar publicaciones */
-    Route::Post("app/Publicaciones/{id?}",'PublicacionesController@mostrarPublicaciones')->where("id","[0-9]+");
+    Route::Get("app/Publicaciones/{id?}",'PublicacionesController@mostrarPublicaciones')->where("id","[0-9]+");
     /* Insertar publicaciones */
     Route::Post("insert/Publicaciones/nueva/{persona_id}/{titulo}/{texto}",'PublicacionesController@insertarPublicaciones')
     ->where([
@@ -103,7 +93,7 @@ use Illuminate\Support\Facades\Route;
     ]);
     /* Comentarios */
     /* Mostrar comentarios */
-    Route::Post("app/Comentarios/{id?}",'ComentariosController@mostrarComentarios')->where("id","[0-9]+");
+    Route::Get("app/Comentarios/{id?}",'ComentariosController@mostrarComentarios')->where("id","[0-9]+");
     /* Insertar Comentarios */
     Route::Post("insert/Comentarios/{persona_id}/{publicaciones_id}/{texto}",'ComentariosController@insertarNuevosComentarios')
     ->where([
@@ -143,6 +133,8 @@ use Illuminate\Support\Facades\Route;
         "id","[0-9]+"
     ]);
     /* Consultas */
+    /* Mostrar toda la Base de datos */
+    Route::Get('/mostrar/bd','PublicacionesController@mostrarBasedeDatos');
     /* Publicaciones de una persona */
     Route::get('/buscar/publicacion/persona/{persona}/publicacion/{publicacion?}','PublicacionesController@publicacionPersona')->where(
         [
@@ -150,10 +142,19 @@ use Illuminate\Support\Facades\Route;
             'publicacion' =>'[0-9]+'
         ]
     );
-    /* Comentarios de persona */
-    Route::get('/buscar/comentario/persona/{persona}/comentario/{comentario?}','ComentariosController@comentariosPersonas')->where(
+    /**Comentarios de una persona*/
+    Route::get('/mostrar/comentarios/persona/{persona}/{comentario?}','ComentariosController@mostrarComentariosPersonas')->where(
         [
-            'persona' => '[0-9]+',
-            'publicacion' =>'[0-9]+'
+            'persona','[0-9]+',
+            'comentario','[0-9]+'
         ]
     );
+    /**mostrarComentarioPublicacionPersona */
+    Route::get('/mostrarComentarioPublicacionPersona/persona/{persona}/publicacion/{publicacion?}/comentario/{comentario?}','ComentariosController@mostrarComentarioPublicacionPersona')->where(
+        [
+            'persona','[0-9]+',
+            'publicacion','[0-9]+',
+            'comentario','[0-9]+'
+        ]
+    );
+    
