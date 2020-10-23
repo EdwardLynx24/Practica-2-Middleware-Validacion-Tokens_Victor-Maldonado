@@ -10,11 +10,11 @@ class PersonasController extends Controller
     /* Insercion */
     public function create(string $nombre, string $apellidoPaterno, string $apellidoMaterno, int $edad, string $sexo){
         $insercionNueva = new Personas;
-        $insercionNueva -> nombre = $nombre;
-        $insercionNueva -> apellidoPaterno = $apellidoPaterno;
-        $insercionNueva -> apellidoMaterno = $apellidoMaterno;
-        $insercionNueva -> edad = $edad;
-        $insercionNueva -> sexo = $sexo;
+        $insercionNueva ->nombre = $nombre;
+        $insercionNueva ->apellidoPaterno = $apellidoPaterno;
+        $insercionNueva ->apellidoMaterno = $apellidoMaterno;
+        $insercionNueva ->edad = $edad;
+        $insercionNueva ->sexo = $sexo;
         $insercionNueva -> save();
         return response()->json([
             "personaRegistrada"=> \App\Personas::find($insercionNueva->id),

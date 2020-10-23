@@ -9,13 +9,13 @@ class ComentariosController extends Controller
 {
     public function mostrarComentarios(request $request, int $id=0){
         return response()->json(["request"=>$request->all(),
-        "Persona"=>($id==0)?\App\Comentarios::all():\App\Comentarios::find($id),
+        "usuario"=>($id==0)?\App\Comentarios::all():\App\Comentarios::find($id),
         200]);
 
     }
-    public function insertarNuevosComentarios(int $persona_id,int $publicacion_id, string $texto){
+    public function insertarNuevosComentarios(int $usuario_id,int $publicacion_id, string $texto){
         $nuevosComentarios = new Comentarios;
-        $nuevosComentarios ->persona_id=$persona_id;
+        $nuevosComentarios ->usuario_id=$usuario_id;
         $nuevosComentarios ->publicacion_id=$publicacion_id;
         $nuevosComentarios ->texto = $texto;
         $nuevosComentarios -> save();
@@ -23,11 +23,11 @@ class ComentariosController extends Controller
             "el comentario se ingreso con exito"=> \App\Comentarios::find($nuevosComentarios->id),
         ]);
     }
-    public function actualizarComentariosCompletos(int $id, int $persona_id, int $publicacion_id, string $texto)
+    public function actualizarComentariosCompletos(int $id, int $usuario_id, int $publicacion_id, string $texto)
     {
         $comentarioActualizado = new Comentarios;
         $comentarioActualizado = Comentarios::find($id);
-        $comentarioActualizado ->persona_id = $persona_id;
+        $comentarioActualizado ->usuario_id = $usuario_id;
         $comentarioActualizado ->publicacion_id = $publicacion_id;
         $comentarioActualizado ->texto = $texto;
         $comentarioActualizado -> save();
@@ -35,16 +35,16 @@ class ComentariosController extends Controller
             "comentarioActualizado"=> \App\Comentarios::find($comentarioActualizado->id)
         ],200);
     } 
-    public function actualizarForaneaComentarios(int $id, int $persona_id){
+    public function actualizarForaneaComentarios(int $id, int $usuario_id){
         $foraneaComentariosUp = new Comentarios;
         $foraneaComentariosUp = Comentarios::find($id);
-        $foraneaComentariosUp ->persona_id=$persona_id;
+        $foraneaComentariosUp ->usuario_id=$usuario_id;
         $foraneaComentariosUp->save();
         return response()->json([
             "foraneaComentariosUp"=> \App\Comentarios::find($foraneaComentariosUp->id)
         ],200);
     }
-    public function actualizarForaneaComentariosPublicacion(int $id, int $persona_id, int $publicacion_id){
+    public function actualizarForaneaComentariosPublicacion(int $id, int $usuario_id, int $publicacion_id){
         $foraneaPublicacionesUp = new Comentarios;
         $foraneaPublicacionesUp = Comentarios::find($id);
         $foraneaPublicacionesUp ->publicacion_id=$publicacion_id;
@@ -69,18 +69,18 @@ class ComentariosController extends Controller
             "publicacionEliminada"=>\App\Comentarios::find($id)
         ],200);
     }
-    /* Comentarios Personas */
-    public function mostrarComentariosPersonas(int $persona, int $comentarios=0){
+    /* Comentarios usuarios */
+    public function mostrarComentariosusuarios(int $usuario, int $comentarios=0){
         return response()->json([
-            "comentarios y de una persona"=>($comentarios == 0)?\App\Comentarios::all():
-            \App\Comentarios::where('persona_id', $persona)->where('id',$comentarios)->get()
+            "comentarios y de una usuario"=>($comentarios == 0)?\App\Comentarios::all():
+            \App\Comentarios::where('usuario_id', $usuario)->where('id',$comentarios)->get()
         ],200);
     }
-    public function mostrarComentarioPublicacionPersona(int $persona, int $publicacion, int $comentario = 0){
+    public function mostrarComentarioPublicacionusuario(int $usuario, int $publicacion, int $comentario = 0){
         return response()->json([
         "todosalv"=>($comentario == 0)?\App\Comentarios::where('publicacion_id',$publicacion)->where(
-        'persona_id',$persona)->get():\App\Comentarios::where('id',$comentario)->where('publicacion_id',$publicacion)->where(
-        'persona_id',$persona)->get()
+        'usuario_id',$usuario)->get():\App\Comentarios::where('id',$comentario)->where('publicacion_id',$publicacion)->where(
+        'usuario_id',$usuario)->get()
         ],200);
     }
 }

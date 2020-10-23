@@ -14,9 +14,9 @@ class PublicacionesController extends Controller
         "Persona"=>($id==0)?\App\Publicaciones::all():\App\Publicaciones::find($id),
         200]);
     }
-    public function insertarPublicaciones(int $persona_id,string $titulo, string $texto){
+    public function insertarPublicaciones(int $usuario_id,string $titulo, string $texto){
         $insercionNueva = new Publicaciones;
-        $insercionNueva ->persona_id=$persona_id;
+        $insercionNueva ->usuario_id=$usuario_id;
         $insercionNueva ->titulo=$titulo;
         $insercionNueva ->texto = $texto;
         $insercionNueva -> save();
@@ -24,11 +24,11 @@ class PublicacionesController extends Controller
             "la publicación se creo con exito"=> \App\Publicaciones::find($insercionNueva->id),
         ]);
     }
-    public function actualizarPublicaciones(int $id, int $persona_id, string $titulo, string $texto)
+    public function actualizarPublicaciones(int $id, int $usuario_id, string $titulo, string $texto)
     {
         $publicacionActualizada = new Publicaciones;
         $publicacionActualizada = Publicaciones::find($id);
-        $publicacionActualizada ->persona_id = $persona_id;
+        $publicacionActualizada ->usuario_id = $usuario_id;
         $publicacionActualizada ->titulo = $titulo;
         $publicacionActualizada ->texto = $texto;
         $publicacionActualizada -> save();
@@ -36,10 +36,10 @@ class PublicacionesController extends Controller
             "publicacionActualizada"=> \App\Publicaciones::find($publicacionActualizada->id)
         ],200);
     } 
-    public function actualizarForanea(int $id, int $persona_id){
+    public function actualizarForanea(int $id, int $usuario_id){
         $llaveForaneaActualizada = new Publicaciones;
         $llaveForaneaActualizada = Publicaciones::find($id);
-        $llaveForaneaActualizada ->persona_id=$persona_id;
+        $llaveForaneaActualizada ->usuario_id=$usuario_id;
         $llaveForaneaActualizada->save();
         return response()->json([
             "llaveForaneaActualizada"=> \App\Publicaciones::find($llaveForaneaActualizada->id)
@@ -72,17 +72,17 @@ class PublicacionesController extends Controller
         ],200);
     }
     /* Publicaciones de una persona */
-    public function publicacionPersona(int $persona, int $publicacion = null){
+    public function publicacionPersona(int $usuario, int $publicacion = null){
         return response()->json([
             "publicacion"=>($publicacion == null)?
-            \App\Publicaciones::where('persona_id',$persona)->get()://Publicaciones de una persona
-            \App\Publicaciones::where('persona_id',$persona)->where('id',$publicacion)->get()//Publicacion de una persona
+            \App\Publicaciones::where('usuario_id',$usuario)->get()://Publicaciones de una usuario
+            \App\Publicaciones::where('usuario_id',$usuario)->where('id',$publicacion)->get()//Publicacion de una persona
         ],200);
     }
     public function mostrarBasedeDatos(){
         return response()->json([
             'Base de Datos'=>DB::table('comentarios')
-            ->join('Personas','personas.id','=','comentarios.persona_id')
+            ->join('Personas','personas.id','=','comentarios.usuario_id')
             ->join('publicaciones','publicaciones.id','=','comentarios.publicacion_id')
             ->select('personas.*','publicaciones.*','comentarios.*')->get()
         ]);

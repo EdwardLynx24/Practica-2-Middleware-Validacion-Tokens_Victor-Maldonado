@@ -15,11 +15,11 @@ class CreatePublicacionesTable extends Migration
     {
         Schema::create('publicaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('persona_id');
+            $table->unsignedBigInteger('usuario_id');
             $table->string('titulo');
             $table->string('texto');
             $table->timestamps();
-            $table->foreign('persona_id')->references('id')->on('personas');
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
         });
     }
 

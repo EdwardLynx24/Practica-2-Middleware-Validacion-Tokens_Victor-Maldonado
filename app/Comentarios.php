@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comentarios extends Model
 {
-    public function personas(){
-        return $this->belongsTo('App\Personas');
+    public function usuarios(){
+        return $this->belongsTo('\App\Usuarios');
     }
     public function publicaciones(){
         return $this->belongsTo('App\Publicaciones');

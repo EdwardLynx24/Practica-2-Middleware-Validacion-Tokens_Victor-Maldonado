@@ -15,11 +15,11 @@ class CreateComentariosTable extends Migration
     {
         Schema::create('comentarios', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('persona_id');
+            $table->unsignedBigInteger('usuario_id');
             $table->unsignedBigInteger('publicacion_id');
             $table->string('texto');
             $table->timestamps();
-            $table->foreign('persona_id')->references('id')->on('personas');
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
             $table->foreign('publicacion_id')->references('id')->on('publicaciones');
         });
     }
