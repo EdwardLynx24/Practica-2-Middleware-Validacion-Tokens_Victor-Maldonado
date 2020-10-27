@@ -4,18 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*Gestion a Personas */
-    Route::Get("/show/Personas/{id?}",'PersonasController@Show')->where("id","[0-9]+");//Mostrar personas
+    Route::Get("/show/Personas/id/",'PersonasController@Show');//Mostrar personas
 //Insertar personas
-    Route::Post("/insert/Personas/{nombre}/{apellidoPaterno}/{apellidoMaterno}/{edad}/{sexo}"
-    ,'PersonasController@create')->where(
-    [
-        "nombre"=>'[a-zA-Z]+',
-        "apellidoPaterno"=>'[a-zA-z]+',
-        "apellidoMaterno"=>'[a-zA-z]+',
-        "edad"=>'[0-9]+',
-        "sexo"=>'[a-zA-z]+'
-    ]
-);
+    Route::Post("/insert/Personas/",'PersonasController@create')->middleware('validad.Edad');
 /*Actualizaciones*/
     Route::Put('update/Personas/{id}/nombre/{nombre}','PersonasController@actualizarNombre')
     ->where([

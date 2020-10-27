@@ -8,23 +8,23 @@ use Illuminate\Http\Request;
 class PersonasController extends Controller
 {
     /* Insercion */
-    public function create(string $nombre, string $apellidoPaterno, string $apellidoMaterno, int $edad, string $sexo){
+    public function create(Request $request){
         $insercionNueva = new Personas;
-        $insercionNueva ->nombre = $nombre;
-        $insercionNueva ->apellidoPaterno = $apellidoPaterno;
-        $insercionNueva ->apellidoMaterno = $apellidoMaterno;
-        $insercionNueva ->edad = $edad;
-        $insercionNueva ->sexo = $sexo;
+        $insercionNueva ->nombre = $request ->nombre;
+        $insercionNueva ->apellidoPaterno = $request ->apellidoPaterno;
+        $insercionNueva ->apellidoMaterno = $request->apellidoMaterno;
+        $insercionNueva ->edad = $request->edad;
+        $insercionNueva ->sexo = $request->sexo;
         $insercionNueva -> save();
         return response()->json([
-            "personaRegistrada"=> \App\Personas::find($insercionNueva->id),
+            "personaRegistrada"=> \App\Personas::find($request->id),
         ]);
     }
     /* Mostrar */
-    public function show(Request $request, int $id=0)
+    public function show(Request $request)
     {
         return response()->json(["request"=>$request->all(),
-        "Persona"=>($id==0)?\App\Personas::all():\App\Personas::find($id),
+        "Persona"=>($request->id==0)?\App\Personas::all():\App\Personas::find($request->id),
         200]);
     }
     /* Actualizaciones */
