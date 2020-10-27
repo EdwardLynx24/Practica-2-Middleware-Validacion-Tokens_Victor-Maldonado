@@ -11,6 +11,7 @@ $factory->define(Usuarios::class, function (Faker $faker) {
         'nickname'=>$faker->word(),
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'password' => $faker->word()
+        'password' => $faker->word(),
+        'rol_id'=>$faker->numberBetween(1,2)
     ];
 });

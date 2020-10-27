@@ -15,4 +15,7 @@ class Usuarios extends Model
     public function personas(){
         return $this->belongsTo('\App\Personas');
     }
+    public function Roles(){
+        return $this->belongsTo('App\Roles');
+    }
 }

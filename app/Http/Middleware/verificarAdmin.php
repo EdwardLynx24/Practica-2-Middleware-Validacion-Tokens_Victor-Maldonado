@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class ValidarEdad
+class verificarAdmin
 {
     /**
      * Handle an incoming request.
@@ -15,8 +15,8 @@ class ValidarEdad
      */
     public function handle($request, Closure $next)
     {
-        if ($request->edad <= 18) {
-            return abort(401,'No te podemos registrar compa :V');
+        if($request->rol_id != 2){
+            return abort(401,'No eres admin  papu :V');
         }
         return $next($request);
     }

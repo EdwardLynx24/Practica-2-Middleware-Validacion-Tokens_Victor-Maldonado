@@ -4,6 +4,8 @@ use Illuminate\Database\Seeder;
 use App\Personas;
 use App\Publicaciones;
 use App\Comentarios;
+use App\Usuarios;
+use App\Roles;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PublicacionesSeeder::class);
         $this->call(ComentariosSeeder::class);
         $this->call(UsuariosSeeder::class);
+        $this->call(RolesSeeder::class);
     }
 }

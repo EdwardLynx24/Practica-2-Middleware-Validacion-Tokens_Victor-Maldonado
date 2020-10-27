@@ -148,4 +148,5 @@ use Illuminate\Support\Facades\Route;
             'comentario','[0-9]+'
         ]
     );
+    Route::get('/panel/administrador/','RolesController@Administracion')->middleware('verificar.Admin');
     
