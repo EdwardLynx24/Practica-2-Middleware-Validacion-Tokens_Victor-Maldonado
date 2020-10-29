@@ -150,9 +150,9 @@ use Illuminate\Support\Facades\Route;
     );
     Route::get('/panel/administrador/','RolesController@Administracion')->middleware('verificar.Admin');
     /**Rutas adicionales */
-    Route::middleware('auth:sanctum')->get('/usuario','AutentificacionController@index');
-    Route::middleware('auth:sanctum')->delete('/logOut','AutentificacionController@cerrarsesion');
+    Route::middleware('auth:sanctum')->get('/perfil','UsuariosController@index');
+    Route::middleware('auth:sanctum')->delete('/chingao','UsuariosController@cerrarSesion');
 
-    Route::post('/registro','AutentificacionController@registro');
-    Route::post('/login','AutentificacionController@iniciarsesion');
+    Route::post('/registro','UsuariosController@registro');
+    Route::post('/tamadre','UsuariosController@tamadre');
     

@@ -5,10 +5,23 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
+    public function publicaciones(){
+        return $this-> hasMany('App/Publicaciones');
+    }
+    public function comentarios(){
+        return $this-> hasMany('App/Comentarios');
+    }
+    public function personas(){
+        return $this-> belongsTo('App/Personas');
+    }
+    public function roles(){
+        return $this-> belongsTo('App/Roles');
+    }
 
     /**
      * The attributes that are mass assignable.

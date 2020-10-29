@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'Usuarios',
+        'guard' => 'api',
+        'passwords' => 'usuarios',
     ],
 
     /*
@@ -28,7 +28,7 @@ return [
     | here which uses session storage and the Eloquent user provider.
     |
     | All authentication drivers have a user provider. This defines how the
-    | Usuarios are actually retrieved out of your database or other storage
+    | usuarios are actually retrieved out of your database or other storage
     | mechanisms used by this application to persist your user's data.
     |
     | Supported: "session", "token"
@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'Usuarios',
+            'provider' => 'usuarios',
         ],
 
         'api' => [
             'driver' => 'sanctum',
-            'provider' => 'Usuarios',
+            'provider' => 'usuarios',
             'hash' => true,
         ],
     ],
@@ -54,7 +54,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | All authentication drivers have a user provider. This defines how the
-    | Usuarios are actually retrieved out of your database or other storage
+    | usuarios are actually retrieved out of your database or other storage
     | mechanisms used by this application to persist your user's data.
     |
     | If you have multiple user tables or models you may configure multiple
@@ -66,14 +66,14 @@ return [
     */
 
     'providers' => [
-        'Usuarios' => [
+        'usuarios' => [
             'driver' => 'eloquent',
             'model' => App\Usuarios::class,
         ],
 
-        // 'Usuarios' => [
+        // 'usuarios' => [
         //     'driver' => 'database',
-        //     'table' => 'Usuarios',
+        //     'table' => 'usuarios',
         // ],
     ],
 
@@ -93,8 +93,8 @@ return [
     */
 
     'passwords' => [
-        'Usuarios' => [
-            'provider' => 'Usuarios',
+        'usuarios' => [
+            'provider' => 'usuarios',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
