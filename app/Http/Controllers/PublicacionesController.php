@@ -14,6 +14,12 @@ class PublicacionesController extends Controller
         "Persona"=>($id==0)?\App\Publicaciones::all():\App\Publicaciones::find($id),
         200]);
     }
+    public function mostrarPublicacionesUsuario(){
+        return response()->json([
+            "Publicaciones"=>\App\Publicaciones::select('titulo as Titulo de la Publicación',
+            'texto as Contenido','created_at as Fecha de Creación')->get()
+        ]);
+    }
     public function insertarPublicaciones(int $usuario_id,string $titulo, string $texto){
         $insercionNueva = new Publicaciones;
         $insercionNueva ->usuario_id=$usuario_id;

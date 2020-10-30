@@ -10,8 +10,8 @@ use Illuminate\Validation\ValidationException;
 
 class UsuariosController extends Controller
 {
-    public function index(Request $request){
-        if($request->user()->tokenCan('usuario:perfil')){
+    public function perfil(Request $request){
+        if($request->user()->tokenCan('administrador')){
             return response()->json(["Usuario"=>$request->user()],200);
         }
         return abort(401, "Invalido Papu");
@@ -19,15 +19,9 @@ class UsuariosController extends Controller
     public function cerrarSesion(Request $request){
         return response()->json(["Tokens Eliminados"=>$request->user()->tokens()->delete()],200);
     }
-
-
-
-
-
-
-
-    public function tamadre(Request $request){
+    public function iniciarSesion(Request $request){
         $request->validate([
+            'rol_id'=>'required',
             'email'=>'required|email',
             'password'=>'required'
         ]);
@@ -37,7 +31,11 @@ class UsuariosController extends Controller
                 'email'=>['Correcto men'],
             ]);
         }
-        $token = $usuario->createToken($request->email,['usuario:perfil'])->plainTextToken;
+        if($usuario->rol_id==1){
+            $token = $usuario->createToken($request->email,['usuario'])->plainTextToken;
+        }elseif($usuario->rol_id==2){
+            $token = $usuario->createToken($request->email,['administrador'])->plainTextToken;
+        }
         return response()->json(["token"=>$token],201);
     }
     public function registro(Request $request){

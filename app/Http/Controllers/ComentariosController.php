@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comentarios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ComentariosController extends Controller
 {
@@ -12,6 +13,13 @@ class ComentariosController extends Controller
         "usuario"=>($id==0)?\App\Comentarios::all():\App\Comentarios::find($id),
         200]);
 
+    }
+    public function mostrarComentariosUsuario(){
+        return response()->json([
+            "Comentarios", DB::table('comentarios')->select('publicaciones.titulo as Titulo de la publicacion','publicaciones.texto as Cuerpo',
+            'comentarios.texto as Comentario','usuarios.nickname as Usuario')->join('publicaciones', 'publicaciones.id', '=', 'comentarios.publicacion_id')
+            ->join('usuarios', 'usuarios.id', '=', 'comentarios.usuario_id')->get()
+        ]);
     }
     public function insertarNuevosComentarios(int $usuario_id,int $publicacion_id, string $texto){
         $nuevosComentarios = new Comentarios;
